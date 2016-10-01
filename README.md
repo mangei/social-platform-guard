@@ -21,3 +21,9 @@ This extension works currently only if your language setting is set to English.
 # Support
 
 Please leave an issue in the Issue Tracker if you have troubles, found a bug, or have a feature request. You can also create Pull requests, which I would appreciate. Thank you! <3
+
+# Screenshot
+
+The Guard works in the background. In the Console from Developer Tools you can see what he actually did.
+
+![Social Platform Guard in Action - Screenshot](https://cloud.githubusercontent.com/assets/1218033/19016586/a5805ece-881e-11e6-96b3-dd7bde98ff97.png)
