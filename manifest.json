@@ -1,0 +1,24 @@
+{
+  "manifest_version": 2,
+  "name": "Social Platform Guard",
+  "description": "This Guard works for you and filters unwanted content from social platforms.",
+  "version": "1.0",
+  "permissions": [
+    "activeTab"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.facebook.com/*"
+      ],
+      "exclude_matches": [
+        "https://www.facebook.com/*/*"
+      ],
+      "js": [
+        "jquery-3.1.1.min.js",
+        "lodash.js",
+        "social_platform_guard.js"
+      ]
+    }
+  ]
+}
