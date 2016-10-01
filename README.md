@@ -9,6 +9,7 @@ Unless this Chrome Extension is not available in the Chrome Web Store, you have 
 1. Download zip-File of this project
 1. Unzip the file
 1. In Chrome: Menu - More Tools - Extensions
+1. Make sure "Developer mode" is enabled
 1. Click "Load unpackaged extension..." button
 1. Select the unzipped folder and click "OK"
 
