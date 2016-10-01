@@ -17,7 +17,7 @@ The extension/your guard is now installed and works for you! :)
 
 # Limitations
 
-This extension works currently only if your language setting is set to English.
+This extension works currently only if your language setting is set to English or German.
 
 # Support
 
