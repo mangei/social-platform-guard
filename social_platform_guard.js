@@ -1,4 +1,4 @@
-var DEBUG = true;
+var DEBUG = false;
 var THROTTLE_IN_MS = 3000;
 var LEAVE_HINTS = true;
 
