@@ -1,0 +1,97 @@
+<!doctype html>
+<!--
+ This page is shown when the extension button is clicked, because the
+ "browser_action" field in manifest.json contains the "default_popup" key with
+ value "popup.html".
+ -->
+<html>
+<head>
+    <style>
+        body {
+            font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
+            font-size: 100%;
+            width: 420px;
+            background-image: url('images/icon400_bg.png');
+            background-repeat: no-repeat;
+            background-position: bottom right;
+        }
+
+        .input-group {
+            margin-bottom: 1em;
+        }
+
+        label, .help {
+            display: block;
+        }
+
+        .help {
+            font-size: 70%
+        }
+
+        textarea {
+            width: 390px;
+            height: 50px;
+            max-width: 390px;
+            max-height: 200px;
+        }
+
+        .refresh-hint {
+            font-weight: bold;
+        }
+
+        .logo {
+            float: left;
+            display: inline-block;
+            margin: 10px;
+            margin-top: 0;
+        }
+
+        #save, #status {
+            display: none; /* since we don't need it yet */
+        }
+    </style>
+
+    <!--
+      - JavaScript and HTML must be in separate files: see our Content Security
+      - Policy documentation[1] for details and explanation.
+      -
+      - [1]: https://developer.chrome.com/extensions/contentSecurityPolicy
+     -->
+    <script src="settings.js"></script>
+</head>
+<body>
+<h1>
+    <img src="images/icon50.png" class="logo">
+    Social Platform Guard
+</h1>
+<div class="input-group">
+    <label>
+        <input id="leaveHints" type="checkbox"/> Leave hints
+    </label>
+    <span class="help">
+			Enabled: You will see hints of hidden posts in your newsfeed. You can click on the hint to show the original post.<br>
+			Disabled: Posts will be hidden as they have never existed. (recommened)
+		</span>
+</div>
+<div class="input-group">
+    <label>
+        <input id="hideSponsored" type="checkbox"/> Hide sponsored posts
+    </label>
+    <span class="help">
+			Enabled: Sponsored posts will be filtered. (recommened)<br>
+			Disabled: Sponsored posts will not be filtered.
+		</span>
+</div>
+<div class="input-group" style="display: none">
+    <label for="whitelist">Whitelist</label>
+    <textarea id="whitelist"></textarea>
+    <span class="help">
+			Enter names of users (as displayed) such they won't get filtered. One name per line.
+		</span>
+</div>
+<button id="save" disabled>Save</button>
+<span id="status"></span>
+<p class="refresh-hint">You need to refresh the page to use updated settings.</p>
+</body>
+</html>
+
