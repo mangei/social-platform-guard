@@ -15,7 +15,7 @@ Because I miss some features great features on social platforms. I miss some fil
 Just install the extention from the Chrome Web Store:  
 https://chrome.google.com/webstore/detail/social-platform-guard/ppppnhhcfohckkomgkhpclefellbnhng
 
-After installation your guard is workings for you! :)
+After installation your guard is working for you! :)
 
 # Configuration
 
