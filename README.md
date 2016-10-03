@@ -12,34 +12,19 @@ Because I miss some features great features on social platforms. I miss some fil
 
 # Installation
 
-Unless this Chrome Extension is not available in the Chrome Web Store, you have to manually install it:
+Just install the extention from the Chrome Web Store:
+https://chrome.google.com/webstore/detail/social-platform-guard
 
-1. Get the files to you local drive
-  1. with Git
-    1. Clone the repository to your local drive
-  1. without Git (or if you don't know what this is)
-    1. Download zip-File of this project
-    1. Unzip the file on your local drive
-1. In Chrome: Menu - More Tools - Extensions
-1. Make sure "Developer mode" is enabled
-1. Click "Load unpackaged extension..." button
-1. Select the unzipped folder and click "OK"
+After installation your guard is workings for you! :)
 
-The extension/your guard is now installed and works for you! :)
+# Configuration
 
-# Update
+Click the icon of the extension to change settings:
 
-1. Get the latest files to you local drive
-  1. with Git
-    1. Pull the latest changes from the master
-  1. without Git (or if you don't know what this is)
-    1. Download the lastest zip-File of this project
-    1. Replace the content of the extension folder with the content
-1. In Chrome: Menu - More Tools - Extensions
-1. Scroll to "Social Platform Guard" extension
-1. Click "Reload (Ctrl+R)"
+- Leave hints
+- Hide Sponsored Posts
 
-The extension/your guard is now updated. Refresh the webpage to see your guard work more powerful again! :)
+See description in the settings popup for further information.
 
 # Limitations
 
@@ -50,6 +35,10 @@ This extension works currently only if your language setting is set to English o
 Please leave an issue in the Issue Tracker if you have troubles, found a bug, or have a feature request. You can also create Pull requests, which I would appreciate. Thank you! <3
 
 # Screenshot
+
+Configure your Guard to see what you want.
+
+![settings_v1 2](https://cloud.githubusercontent.com/assets/1218033/19054477/d942b26e-89bf-11e6-9010-8049c0aa977b.png)
 
 The Guard works in the background. In the Console from Developer Tools you can see what he actually did.
 
