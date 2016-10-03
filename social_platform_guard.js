@@ -3,8 +3,7 @@ var THROTTLE_IN_MS = 3000;
 
 var config = {
     leaveHints: true,
-    hideSponsored: false,
-    whitelist: ''
+    hideSponsored: false
 };
 
 var messages = {
@@ -109,9 +108,8 @@ function hideSpecialPosts() {
         var text = $(this).parent().parent().text();
 
         var parseResult = parseSpecialText(text);
-        var isOnWhiteList = isWhitelisted(parseResult.user);
 
-        if (parseResult.isSpecialText && !isOnWhiteList) {
+        if (parseResult.isSpecialText) {
             hideElement(getHyperfeedElement($(this)), getLocalizedMessages().userPost + ': ' + text, parseResult.user);
         }
     });
@@ -174,15 +172,5 @@ function hideElement(element, message, user) {
 
     element.hide();
 }
-
-function isWhitelisted(user) {
-    return false; // TODO user === 'A A';
-}
-// TODO users
-// A
-// A A
-// A A A
-// A A and B B
-// A A, B B and C C
 
 init();
