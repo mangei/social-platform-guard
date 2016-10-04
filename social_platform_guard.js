@@ -25,6 +25,7 @@ var messages = {
             /(.*) was mentioned in a post\./,
             /(.*) replied to a comment on a post from (.*)\./,
             /(.*) likes (.*)\./,
+            /(.*) like (.*)\./,
             /(.*) liked this post from (.*)\./,
             /Saved on (.*)/,
             // TODO /(.*) hat diesen Beitrag (.*) markiert./, // XYZ hat diesen Beitrag (September 2014) mit „Gefällt mir“ markiert.
@@ -49,10 +50,11 @@ var messages = {
             /(.*) wurde in einem Beitrag erwähnt\./,
             // TODO /(.*) replied to a comment on a post from (.*)\./,
             /(.*) gefällt (.*)\./,
+            // TODO /(.*) like (.*)\./,
             // TODO /(.*) liked this post from (.*)\./,
             /Gespeichert am (.*)/,
             /(.*) hat diesen Beitrag (.*) markiert./, // XYZ hat diesen Beitrag (September 2014) mit „Gefällt mir“ markiert.
-            /(.*) hat einen Beitrag (.*) kommentiert./, // XYZ Stiegler hat einen Beitrag (25. August) kommentiert.
+            /(.*) hat einen Beitrag (.*) kommentiert./ // XYZ hat einen Beitrag (25. August) kommentiert.
         ]
     }
 };
@@ -83,10 +85,13 @@ function doJob() {
         var startTime = window.performance.now();
     }
 
-    if (config.hideSponsored) {
-        hideSponsoredPosts();
-    }
-    hideSpecialPosts();
+    getUncheckedHyperfeedElements().each(function () {
+        var hyperfeedElement = $(this);
+        var gotHidden = hideSpecialPosts(hyperfeedElement);
+        if (config.hideSponsored && !gotHidden) {
+            hideSponsoredPosts(hyperfeedElement);
+        }
+    });
 
     if (DEBUG) {
         var endTime = window.performance.now();
@@ -94,25 +99,32 @@ function doJob() {
     }
 }
 
-function hideSponsoredPosts() {
-    $('.uiStreamSponsoredLink:not(.guard-checked)').each(function () {
-        $(this).addClass('guard-checked');
-        hideElement(getHyperfeedElement($(this)), getLocalizedMessages().sponsoredPost);
-    });
+function hideSponsoredPosts(hyperfeedElement) {
+    var gotHidden = false;
+    hyperfeedElement
+        .find('.uiStreamSponsoredLink')
+        .first()
+        .each(function () {
+            gotHidden = true;
+            hideElement(hyperfeedElement, getLocalizedMessages().sponsoredPost);
+        });
+    return gotHidden;
 }
 
-function hideSpecialPosts() {
-    $('.profileLink:not(.guard-checked)').each(function () {
-        $(this).addClass('guard-checked');
-
-        var text = $(this).parent().parent().text();
-
-        var parseResult = parseSpecialText(text);
-
-        if (parseResult.isSpecialText) {
-            hideElement(getHyperfeedElement($(this)), getLocalizedMessages().userPost + ': ' + text, parseResult.user);
-        }
-    });
+function hideSpecialPosts(hyperfeedElement) {
+    var gotHidden = false;
+    hyperfeedElement
+        .find('.profileLink')
+        .first()
+        .each(function () {
+            var text = $(this).parent().parent().text();
+            var parseResult = parseSpecialText(text);
+            if (parseResult.isSpecialText) {
+                gotHidden = true;
+                hideElement(hyperfeedElement, getLocalizedMessages().userPost + ': ' + text, parseResult.user);
+            }
+        });
+    return gotHidden;
 }
 
 function parseSpecialText(text) {
@@ -132,8 +144,9 @@ function parseSpecialText(text) {
     };
 }
 
-function getHyperfeedElement($element) {
-    return $element.closest("[id ^= 'hyperfeed_story_id_']");
+function getUncheckedHyperfeedElements() {
+    return $("[id ^= 'hyperfeed_story_id_']:not(.guard-checked)")
+        .addClass('guard-checked');
 }
 
 function log() {
