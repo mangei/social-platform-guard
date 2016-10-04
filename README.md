@@ -33,6 +33,10 @@ See description in the settings popup for further information.
 
 This extension works currently only if your language setting is set to English or German.
 
+# Changelog
+
+sett [CHANGELOG.md](CHANGELOG.md)
+
 # Support
 
 Please leave an issue in the Issue Tracker if you have troubles, found a bug, or have a feature request. You can also create Pull requests, which I would appreciate. Thank you! <3
