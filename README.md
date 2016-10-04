@@ -35,7 +35,7 @@ This extension works currently only if your language setting is set to English o
 
 # Changelog
 
-sett [CHANGELOG.md](CHANGELOG.md)
+see [CHANGELOG.md](CHANGELOG.md)
 
 # Support
 
