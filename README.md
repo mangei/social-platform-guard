@@ -2,6 +2,9 @@
 
 ![logo128](https://cloud.githubusercontent.com/assets/1218033/19050925/0b2c89bc-89b1-11e6-9c42-fff49adff392.png)
 
+by [Manuel Geier](http://geier.io)  
+on [Github](https://github.com/mangei/social-platform-guard)
+
 # Description
 
 Chrome Extension: This Guard works for you and filters unwanted content from social platforms.
