@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.4 (2016-10-06)
+ - Added: Whitelisting of users
+
 ## v1.3 (2016-10-04)
  - Added: Changelog
  - Improved: Only check each newsfeed entry once.

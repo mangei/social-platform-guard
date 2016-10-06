@@ -1,10 +1,15 @@
 var DEBUG = false;
 var THROTTLE_IN_MS = 3000;
+var IGNORE_OTHERS = true;
 
 var config = {
     leaveHints: true,
-    hideSponsored: false
+    hideSponsored: false,
+    whitelist: ''
 };
+var userRegex = undefined;
+var othersRegex = undefined;
+var whitelistedUsers = undefined;
 
 var messages = {
     appName: 'Social Platform Guard',
@@ -14,6 +19,8 @@ var messages = {
         sponsoredPost: 'Sponsored Post',
         showPost: 'Show Post',
         hidden: 'Hidden',
+        and: 'and',
+        others: 'others',
         postRegexList: [
             /(.*) liked this\./,
             /(.*) was tagged in a photo\./,
@@ -38,6 +45,8 @@ var messages = {
         sponsoredPost: 'Werbebeitrag',
         showPost: 'Zeige Beitrag',
         hidden: 'Ausgeblendet',
+        and: 'und',
+        others: 'weiteren Personen',
         postRegexList: [
             /(.*) gefällt das\./,
             /(.*) wurde in einem Foto markiert\./,
@@ -64,6 +73,10 @@ function init() {
         config = items;
 
         log(getLocalizedMessages().iAmWorkingForYou);
+        userRegex = new RegExp('((.*) ' + getLocalizedMessages().and + ' )?(.*)'); // // A A, B B and C C
+        othersRegex = new RegExp('\d+ ' + getLocalizedMessages().others);
+        whitelistedUsers = initWhitelistedUsers();
+        log('Whitelisted: ', whitelistedUsers);
 
         var doJobThrottled = _.throttle(doJob, THROTTLE_IN_MS);
         window.addEventListener('scroll', doJobThrottled);
@@ -78,6 +91,14 @@ function init() {
         setTimeout(doJob, 3000);
         setTimeout(doJob, 5000);
     });
+}
+
+function initWhitelistedUsers() {
+    var users = [];
+    if (!_.isEmpty(config.whitelist)) {
+        users = config.whitelist.split('\n');
+    }
+    return users;
 }
 
 function doJob() {
@@ -117,31 +138,46 @@ function hideSpecialPosts(hyperfeedElement) {
         .find('.profileLink')
         .first()
         .each(function () {
-            var text = $(this).parent().parent().text();
+            var labelElement = $(this).parent().parent();
+            var text = labelElement.text();
             var parseResult = parseSpecialText(text);
             if (parseResult.isSpecialText) {
-                gotHidden = true;
-                hideElement(hyperfeedElement, getLocalizedMessages().userPost + ': ' + text, parseResult.user);
+                var otherUsers = parseOtherUsers(labelElement, parseResult.userText);
+                var isOnWhiteList = isWhitelisted(parseResult.userText, otherUsers);
+                if (!isOnWhiteList) {
+                    gotHidden = true;
+                    hideElement(hyperfeedElement, getLocalizedMessages().userPost + ': ' + text, parseResult.userText, otherUsers);
+                }
             }
         });
     return gotHidden;
 }
 
 function parseSpecialText(text) {
-    var user = undefined;
+    var userText = undefined;
     var postRegexList = getLocalizedMessages().postRegexList;
     var isSpecialText = _.some(postRegexList, function (postRegex) {
         var matched = postRegex.test(text);
         if (matched) {
             var match = postRegex.exec(text);
-            user = match[1];
+            userText = match[1];
         }
         return matched;
     });
     return {
         isSpecialText: isSpecialText,
-        user: user
+        userText: userText
     };
+}
+
+function parseOtherUsers(labelElement, userText) {
+    // A A and 3 others commented on this.
+    var otherUsers = [];
+    if (!IGNORE_OTHERS && userText.indexOf(' others') !== -1) {
+        var otherUsersText = labelElement.find("a[data-hover='tooltip']").attr('data-tooltip-content');
+        otherUsers = otherUsersText.split('\n');
+    }
+    return otherUsers;
 }
 
 function getUncheckedHyperfeedElements() {
@@ -184,6 +220,30 @@ function hideElement(element, message, user) {
     }
 
     element.hide();
+}
+
+function isWhitelisted(userText, otherUsers) {
+    var users = getUsers(userText);
+    _.remove(users, function (user) {
+        return othersRegex.test(user);
+    });
+    users = users.concat(otherUsers);
+    var listedUsers = _.intersection(whitelistedUsers, users);
+    return !_.isEmpty(listedUsers);
+}
+
+function getUsers(userText) {
+    var users = [];
+    var match = userRegex.exec(userText);
+    var commaUsers = match[2];
+    if (commaUsers !== undefined) {
+        users = commaUsers.split(', ');
+    }
+    var andUser = match[3];
+    if (andUser !== undefined) {
+        users.push(andUser);
+    }
+    return users;
 }
 
 init();

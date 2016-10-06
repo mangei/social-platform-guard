@@ -26,6 +26,7 @@ Click the icon of the extension to change settings:
 
 - Leave hints
 - Hide Sponsored Posts
+- Whitelist
 
 See description in the settings popup for further information.
 
