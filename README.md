@@ -46,7 +46,7 @@ Please leave an issue in the Issue Tracker if you have troubles, found a bug, or
 
 Configure your Guard to see what you want.
 
-![settings_v1 2](https://cloud.githubusercontent.com/assets/1218033/19054477/d942b26e-89bf-11e6-9010-8049c0aa977b.png)
+![settings_v1 4](https://cloud.githubusercontent.com/assets/1218033/19136524/8ee303a4-8b6d-11e6-96e8-b9232a8f298a.png)
 
 The Guard works in the background. In the Console from Developer Tools you can see what he actually did.
 
