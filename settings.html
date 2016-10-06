@@ -45,10 +45,6 @@
             margin: 10px;
             margin-top: 0;
         }
-
-        #save, #status {
-            display: none; /* since we don't need it yet */
-        }
     </style>
 
     <!--
@@ -57,6 +53,7 @@
       -
       - [1]: https://developer.chrome.com/extensions/contentSecurityPolicy
      -->
+    <script src="lodash.js"></script>
     <script src="settings.js"></script>
 </head>
 <body>
@@ -82,12 +79,12 @@
 			Disabled: Sponsored posts will not be filtered.
 		</span>
 </div>
-<div class="input-group" style="display: none">
+<div class="input-group">
     <label for="whitelist">Whitelist</label>
     <textarea id="whitelist"></textarea>
     <span class="help">
-			Enter names of users (as displayed) such they won't get filtered. One name per line.
-		</span>
+        Enter names of users (as displayed) such they won't get filtered. One name per line.
+    </span>
 </div>
 <button id="save" disabled>Save</button>
 <span id="status"></span>

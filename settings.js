@@ -5,7 +5,8 @@ function save_options() {
     saveButton.disabled = true;
     var leaveHints = document.getElementById('leaveHints').checked;
     var hideSponsored = document.getElementById('hideSponsored').checked;
-    var whitelist = document.getElementById('whitelist').value;
+    var whitelist = normalizeWhitelist(document.getElementById('whitelist').value);
+    document.getElementById('whitelist').value = whitelist;
     chrome.storage.sync.set({
         leaveHints: leaveHints,
         hideSponsored: hideSponsored,
@@ -18,6 +19,16 @@ function save_options() {
             status.textContent = '';
         }, 1000);
     });
+}
+
+function normalizeWhitelist(whitelist) {
+    return _.chain(whitelist.split('\n'))
+        .map(function (entry) {
+            return entry.trim();
+        })
+        .reject(_.isEmpty)
+        .join('\n')
+        .value();
 }
 
 function restore_options(callback) {
