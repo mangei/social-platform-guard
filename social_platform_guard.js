@@ -17,6 +17,7 @@ var messages = {
         iAmWorkingForYou: 'I am working for you!',
         userPost: 'User Post',
         sponsoredPost: 'Sponsored Post',
+        sponsored: 'Sponsored',
         showPost: 'Show Post',
         hidden: 'Hidden',
         and: 'and',
@@ -31,18 +32,22 @@ var messages = {
             /(.*) commented on this\./,
             /(.*) was mentioned in a post\./,
             /(.*) replied to a comment on a post from (.*)\./,
+            /(.*) reacted to this post from (.*)\./,
             /(.*) likes (.*)\./,
+            /(.*) liked (.*) cover photo\./,
             /(.*) like (.*)\./,
             /(.*) liked this post from (.*)\./,
-            /Saved on (.*)/,
+            /Saved .*/, // Saved about a week ago
             // TODO /(.*) hat diesen Beitrag (.*) markiert./, // XYZ hat diesen Beitrag (September 2014) mit „Gefällt mir“ markiert.
-            /(.*) commented on a post from (.*)\./
+            /(.*) commented on a post from (.*)\./,
+            /(.*) and (.*) are now friends\./
         ]
     },
     de: {
         iAmWorkingForYou: 'Ich arbeite für dich!',
         userPost: 'Benutzerbeitrag',
         sponsoredPost: 'Werbebeitrag',
+        sponsored: 'Gesponsert',
         showPost: 'Zeige Beitrag',
         hidden: 'Ausgeblendet',
         and: 'und',
@@ -57,11 +62,11 @@ var messages = {
             /(.*) hat das kommentiert\./,
             /(.*) haben das kommentiert\./,
             /(.*) wurde in einem Beitrag erwähnt\./,
-            // TODO /(.*) replied to a comment on a post from (.*)\./,
+            /(.*) hat auf einen Kommentar zu einem Beitrag (.*) geantwortet\./, // hat auf einen Kommentar zu einem Beitrag (11. April) geantwortet.
             /(.*) gefällt (.*)\./,
-            // TODO /(.*) like (.*)\./,
             // TODO /(.*) liked this post from (.*)\./,
-            /Gespeichert am (.*)/,
+            /(.*) hat auf diesen Beitrag (.*) reagiert./,
+            /Gespeichert .*/, // Gespeichert am, Gespeichert letzten, ...
             /(.*) hat diesen Beitrag (.*) markiert./, // XYZ hat diesen Beitrag (September 2014) mit „Gefällt mir“ markiert.
             /(.*) hat einen Beitrag (.*) kommentiert./ // XYZ hat einen Beitrag (25. August) kommentiert.
         ]
@@ -73,9 +78,10 @@ function init() {
         config = items;
 
         log(getLocalizedMessages().iAmWorkingForYou);
+
         userRegex = new RegExp('((.*) ' + getLocalizedMessages().and + ' )?(.*)'); // // A A, B B and C C
         othersRegex = new RegExp('\d+ ' + getLocalizedMessages().others);
-        whitelistedUsers = initWhitelistedUsers();
+        whitelistedUsers = getWhitelistedUsers();
         log('Whitelisted: ', whitelistedUsers);
 
         var doJobThrottled = _.throttle(doJob, THROTTLE_IN_MS);
@@ -93,7 +99,7 @@ function init() {
     });
 }
 
-function initWhitelistedUsers() {
+function getWhitelistedUsers() {
     var users = [];
     if (!_.isEmpty(config.whitelist)) {
         users = config.whitelist.split('\n');
@@ -122,6 +128,8 @@ function doJob() {
 
 function hideSponsoredPosts(hyperfeedElement) {
     var gotHidden = false;
+
+    // method 1: search by sponsor link (may not work anymore)
     hyperfeedElement
         .find('.uiStreamSponsoredLink')
         .first()
@@ -129,6 +137,18 @@ function hideSponsoredPosts(hyperfeedElement) {
             gotHidden = true;
             hideElement(hyperfeedElement, getLocalizedMessages().sponsoredPost);
         });
+
+    if (!gotHidden) {
+        // method 2: search by sponsor text
+        hyperfeedElement
+            .find("a:contains('" + getLocalizedMessages().sponsored + "')")
+            .first()
+            .each(function () {
+                gotHidden = true;
+                hideElement(hyperfeedElement, getLocalizedMessages().sponsoredPost);
+            });
+    }
+
     return gotHidden;
 }
 
