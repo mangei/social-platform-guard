@@ -1,7 +1,11 @@
 # Changelog
 
+## v1.5 (2017-04-11)
+ - Added: Link of logo is will be replaced with link to always show "Recent Posts".
+ - Improved: Recognition of sponsored posts
+
 ## v1.4 (2016-10-06)
- - Added: Whitelisting of users
+ - Added: White listing of users
 
 ## v1.3 (2016-10-04)
  - Added: Changelog

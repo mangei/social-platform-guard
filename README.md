@@ -11,7 +11,7 @@ Chrome Extension: This Guard works for you and filters unwanted content from soc
 
 # Why I developed this extension?
 
-Because I miss some features great features on social platforms. I miss some filters to give me posts I really care about. And what I care about is what people actually post or share! I don't care about what they liked, what they commented on, how they reacted on other posts (of people or pages I don't even know or I am not interested in), or if they were tagged or mentioned somewhere. NO! I want to see what they are actually posting or sharing! This extension - my personal Guard - hides all posts I don't care about and let me focus on important things again. On explicit posts and shares from my friends!
+Because I miss some great features on social platforms. I miss some filters to give me posts I really care about. And what I care about is what people actually post or share! I don't care about what they liked, what they commented on, how they reacted on other posts (of people or pages I don't even know or I am not interested in), or if they were tagged or mentioned somewhere. NO! I want to see what they are actually posting or sharing! This extension - my personal Guard - hides all posts I don't care about and let me focus on important things again. On explicit posts and shares from my friends!
 
 # Installation
 
